@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fbfaf5">
+<meta name="description" content="ಪ್ರಥಮ ಭಾಷೆ (ಕನ್ನಡ) - FLN 2026-27 ಹಂತವಾರು ಪ್ರಗತಿ ಪಟ್ಟಿ">
+<title>ಪ್ರಥಮ ಭಾಷೆ · FLN ಹಂತ ಪಟ್ಟಿ</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;500;600;700&family=Noto+Serif+Kannada:wght@600;700&family=Baloo+2:wght@600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root {
+  --bg: #fbfaf5;
+  --panel: #ffffff;
+  --panel-2: #f6f1e4;
+  --panel-3: #efe6d0;
+  --ink: #2a2f27;
+  --muted: #5b6455;
+  --muted-2: #838b78;
+  --accent: #c68a1f;
+  --accent-2: #c1443a;
+  --line: #e4ddc9;
+  --good: #4c7d38;
+  --bad: #c1443a;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin:0; padding:0; }
+body {
+  background:
+    radial-gradient(ellipse 900px 460px at 50% -140px, rgba(198,138,31,.08), transparent 62%),
+    var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans Kannada', sans-serif;
+  min-height: 100vh;
+  padding-bottom: 56px;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 20px 18px 8px; position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
+
+header.top {
+  padding: 26px 16px 24px;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.eyebrow {
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  margin: 0 0 10px;
+  font-weight: 700;
+}
+h1.title {
+  font-family: 'Noto Serif Kannada', serif;
+  font-size: clamp(23px, 6vw, 30px);
+  line-height: 1.3;
+  margin: 0 0 14px;
+  color: var(--ink);
+  position: relative;
+  display: inline-block;
+}
+h1.title svg.underline {
+  position: absolute;
+  left: -3px;
+  bottom: -9px;
+  width: calc(100% + 14px);
+  height: 12px;
+  overflow: visible;
+}
+.sub {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 600px;
+}
+.tagpill {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 14px;
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: .03em;
+  box-shadow: 0 2px 6px rgba(198,138,31,.35);
+}
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  font-weight: 700;
+  margin: 22px 2px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label .dash { flex:1; height:1px; background: var(--line); }
+
+.student-bar {
+  margin: 16px 0 8px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(42,47,39,.05);
+}
+.class-filter {
+  display:flex;
+  gap:6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.cls-pill {
+  background: var(--bad);
+  color: #ffffff;
+  border: 1px solid var(--bad);
+  padding: 6px 13px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.cls-pill.active {
+  background: var(--bad);
+  color: #fff;
+  border: 2px solid #7a1f18;
+  box-shadow: 0 0 0 2px rgba(193,68,58,.25);
+}
+.student-row {
+  display:flex;
+  gap:8px;
+  flex-wrap: wrap;
+}
+select, input[type=text] {
+  flex: 1 1 140px;
+  background: var(--panel-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 11px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  min-width: 0;
+}
+select:focus, input[type=text]:focus, textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+.cls-select { flex: 0 1 118px; }
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 11px 15px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  min-height: 42px;
+  transition: filter .15s ease, transform .05s ease, background .15s ease;
+}
+button:active { transform: scale(.97); }
+button svg { flex: none; }
+.btn-accent { background: #2f8f57; color: #fff; border: 1px solid #2f8f57; box-shadow: 0 2px 8px rgba(47,143,87,.3); }
+.btn-accent:hover { filter: brightness(1.08); }
+.btn-outline { background: #2f6f9f; color: #fff; border: 1px solid #2f6f9f; }
+.btn-outline:hover { filter: brightness(1.08); }
+.btn-danger { background: var(--bad); color: #fff; border: 1px solid var(--bad); }
+.btn-danger:hover { filter: brightness(1.1); }
+.btn-ghost { background: #b8791a; color: #fff; border: 1px solid #b8791a; }
+.btn-ghost:hover { filter: brightness(1.08); }
+.row-actions { display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:12px; }
+.row-actions button { justify-content:center; width:100%; white-space: normal; text-align:center; line-height:1.3; height:auto; padding-top:10px; padding-bottom:10px; }
+@media (min-width: 640px) { .row-actions { grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); } }
+.current-student-tag {
+  margin-top: 10px;
+  font-size: 11.5px;
+  color: var(--muted-2);
+}
+.current-student-tag b { color: var(--accent); font-weight: 700; }
+
+.overall {
+  margin: 16px 0 20px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 10px rgba(42,47,39,.05);
+}
+.overall .label { display:flex; justify-content:space-between; font-size:12.5px; color:var(--muted); margin-bottom:8px; }
+.bar { height: 10px; border-radius: 999px; background: var(--panel-2); overflow:hidden; }
+.bar > i { display:block; height:100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius:999px; transition: width .35s ease; }
+
+.stage {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(42,47,39,.05);
+}
+.stage-head {
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+.stage-num {
+  flex: none;
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  background: var(--panel-2);
+  display:flex; align-items:center; justify-content:center;
+  font-family: 'Space Mono', monospace;
+  font-weight:700;
+  font-size: 13px;
+  color: var(--accent);
+  border: 1px solid var(--line);
+}
+.stage-info { flex: 1; min-width:0; }
+.stage-name { font-family: 'Noto Serif Kannada', serif; font-size: 16px; font-weight:700; margin:0; }
+.stage-period { font-size: 11.5px; color: var(--muted); margin-top:2px; }
+.stage-pct { font-size: 12px; font-weight:700; color: #fff; background: var(--accent); flex:none; font-family:'Space Mono',monospace; padding: 3px 8px; border-radius: 999px; }
+.chev { flex:none; transition: transform .25s ease; color: var(--muted); }
+.stage.open .chev { transform: rotate(180deg); }
+.stage-range {
+  margin: 0 16px 10px;
+  font-size: 12px;
+  color: var(--muted);
+  background: var(--panel-2);
+  border-radius: 8px;
+  padding: 6px 10px;
+  display:inline-block;
+}
+.stage-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease;
+  padding: 0 16px;
+}
+.stage.open .stage-body { padding-bottom: 14px; }
+.mini-bar { height:6px; border-radius:999px; background:var(--panel-2); margin: 0 16px 8px; overflow:hidden; }
+.mini-bar > i { display:block; height:100%; background:var(--accent); border-radius:999px; transition: width .3s ease; }
+
+.item {
+  border-radius: 12px;
+  margin-bottom: 8px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.item-head {
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 11px 12px;
+  cursor: pointer;
+  user-select: none;
+}
+.item-head .item-name { flex:1; font-size: 14px; font-weight:600; line-height:1.4; }
+.item-frac {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 3px 8px;
+  border-radius: 999px;
+  flex: none;
+}
+.item-frac.full { color: #fff; background: var(--good); border-color: var(--good); }
+.item-chev { flex:none; font-size:12px; color:var(--muted); transition: transform .2s ease; }
+.item.open .item-chev { transform: rotate(180deg); }
+.unit-wrap {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .25s ease;
+}
+.item.open .unit-wrap { padding: 0 12px 12px; max-height: 6000px; }
+.unit-grid {
+  display:flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+.unit-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Noto Serif Kannada', serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.7;
+  padding: 8px 13px;
+  border-radius: 8px;
+  background: var(--bad);
+  color: #ffffff;
+  border: 1px solid var(--bad);
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease, transform .1s ease, border-color .15s ease;
+  white-space: nowrap;
+  overflow: visible;
+}
+.unit-chip.on {
+  background: var(--good);
+  color: #fff;
+  border-color: var(--good);
+}
+.unit-chip.custom { padding-right: 26px; }
+.unit-chip:active { transform: scale(.94); }
+.chip-del {
+  position: absolute;
+  right: 4px; top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Noto Sans Kannada', sans-serif;
+  font-size: 10px;
+  opacity: .8;
+}
+.unit-hint {
+  font-size: 10.5px;
+  color: var(--muted-2);
+  margin: 8px 0 0;
+}
+.item-add-row { margin-top: 8px; }
+.item-add-btn {
+  font-size: 11.5px;
+  padding: 6px 10px;
+  background: #b8791a;
+  color: #fff;
+  border: 1px solid #b8791a;
+  border-radius: 8px;
+}
+.item-add-btn:hover { filter: brightness(1.08); }
+
+footer.appfoot {
+  max-width: 720px; margin: 10px auto 0; padding: 10px 16px 30px;
+  font-size: 11px; color: var(--muted-2); text-align:center; line-height:1.6;
+}
+.install-hint {
+  max-width: 720px; margin: 0 auto 6px; padding: 0 16px;
+  font-size: 11.5px; color: var(--muted);
+}
+
+.ink-stamp {
+  position: fixed; top: -40px; right: -30px; width: 180px; height: 180px;
+  border-radius: 50%; background: var(--accent-2);
+  opacity: .06; pointer-events: none; z-index: 0;
+}
+
+/* ---- Modals ---- */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(20,18,14,.55);
+  display: none; align-items: flex-end; justify-content: center;
+  z-index: 50; padding: 0;
+  backdrop-filter: blur(2px);
+}
+.modal-overlay.show { display: flex; }
+.modal-box {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-top-left-radius: 20px; border-top-right-radius: 20px;
+  width: 100%; max-width: 560px;
+  max-height: 88vh; overflow-y: auto;
+  padding: 18px 18px 22px;
+  animation: slideup .22s ease;
+  box-shadow: 0 -4px 24px rgba(42,47,39,.12);
+}
+@keyframes slideup { from { transform: translateY(24px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+@media (min-width: 700px) {
+  .modal-overlay { align-items: center; }
+  .modal-box { border-radius: 18px; }
+}
+.modal-head {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom: 6px;
+}
+.modal-title { font-family: 'Noto Serif Kannada', serif; font-size: 18px; font-weight:700; margin:0; }
+.modal-close {
+  background: var(--panel-2); color: var(--muted); border: 1px solid var(--line);
+  width: 30px; height:30px; border-radius: 999px; padding:0;
+  display:flex; align-items:center; justify-content:center; font-size: 15px;
+}
+.modal-sub { font-size: 12px; color: var(--muted); margin: 0 0 16px; line-height:1.5; }
+.tabs { display:flex; gap:6px; margin-bottom: 14px; background: var(--panel-2); padding:4px; border-radius:10px; }
+.tab-btn {
+  flex:1; background: transparent; color: var(--muted); border:none; border-radius:8px;
+  padding: 8px 10px; font-size: 12.5px; font-weight:700; justify-content:center;
+}
+.tab-btn.active { background: var(--panel); color: var(--ink); box-shadow: 0 1px 3px rgba(42,47,39,.1); }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+.field-label { font-size: 11.5px; color: var(--muted-2); font-weight:700; margin: 12px 0 6px; text-transform: uppercase; letter-spacing:.06em; }
+.field-label:first-child { margin-top:0; }
+textarea {
+  width: 100%; background: var(--panel-2); color: var(--ink); border:1px solid var(--line);
+  border-radius: 10px; padding: 10px 12px; font-size: 13.5px; font-family: inherit;
+  resize: vertical; min-height: 90px;
+}
+.file-drop {
+  border: 1.5px dashed var(--line); border-radius: 12px; padding: 18px 12px;
+  text-align:center; color: var(--muted); font-size: 12.5px; cursor:pointer;
+  background: var(--panel-2);
+}
+.file-drop:hover { border-color: var(--accent); color: var(--ink); }
+.file-drop input { display:none; }
+.file-drop .fname { color: var(--accent); font-weight:700; margin-top:4px; }
+.modal-actions { display:flex; gap:8px; margin-top:16px; }
+.modal-actions button { flex:1; justify-content:center; }
+.status-msg { font-size: 12px; margin-top: 10px; padding: 8px 10px; border-radius:8px; line-height:1.5; display:none; }
+.status-msg.show { display:block; }
+.status-msg.ok { background: rgba(76,125,56,.12); color: var(--good); border:1px solid rgba(76,125,56,.3); }
+.status-msg.err { background: rgba(193,68,58,.1); color: var(--bad); border:1px solid rgba(193,68,58,.3); }
+.preview-list { margin-top: 10px; font-size: 12px; color: var(--muted); max-height: 140px; overflow-y:auto; background: var(--panel-2); border:1px solid var(--line); border-radius:8px; padding: 8px 10px; }
+.preview-list div { padding: 2px 0; border-bottom: 1px dashed var(--line); }
+.preview-list div:last-child { border-bottom:none; }
+
+.select-row { display:flex; gap:8px; }
+.select-row select { flex:1; }
+.example-note { font-size: 11px; color: var(--muted-2); margin-top: 6px; line-height:1.6; }
+.example-note code { background: var(--panel-3); padding: 1px 5px; border-radius:4px; font-family:'Space Mono', monospace; font-size:10.5px; }
+
+@media (min-width: 700px) {
+  .student-row { flex-wrap: nowrap; }
+}
+@media (max-width: 360px) {
+  .wrap { padding: 16px 14px 8px; }
+  button { font-size: 12.5px; padding: 10px 12px; }
+  h1.title { font-size: 22px; }
+}
+
+.lock-banner{margin:16px 0;background:linear-gradient(135deg,#c1443a,#c68a1f);color:#fff;border-radius:14px;padding:14px 16px;display:none;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;box-shadow:0 3px 12px rgba(193,68,58,.25);}
+.lock-banner.show{display:flex;}
+.lock-banner p{margin:0;font-size:12.5px;line-height:1.5;flex:1;min-width:200px;}
+.lock-banner button{background:#fff;color:#c1443a;border:none;flex:none;}
+.paywall-price{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0;}
+.paywall-price .pp-card{flex:1 1 140px;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;font-size:11.5px;color:var(--muted);}
+.paywall-price .pp-card b{display:block;font-size:20px;color:var(--accent);font-family:'Space Mono',monospace;margin:4px 0;}
+.paywall-price .pp-card.bundle{border-color:var(--accent);background:rgba(198,138,31,.1);}
+.qr-wrap{text-align:center;margin:14px 0;}
+.qr-wrap img{width:170px;height:170px;border-radius:10px;border:1px solid var(--line);background:#fff;padding:6px;}
+.upi-id-row{display:flex;align-items:center;gap:8px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-family:'Space Mono',monospace;font-size:13px;justify-content:space-between;margin:8px 0;}
+.upi-id-row button{padding:5px 10px;font-size:11px;min-height:auto;}
+.wa-btn{background:#25D366;color:#fff;border:1px solid #25D366;width:100%;justify-content:center;margin:6px 0 14px;text-decoration:none;display:flex;align-items:center;padding:11px 15px;border-radius:10px;font-weight:700;font-size:13.5px;}
+.wa-btn:hover{filter:brightness(1.06);}
+.unlock-row{display:flex;gap:8px;flex-wrap:wrap;}
+.unlock-row input{flex:1 1 120px;}
+
+.dash-btn-row{display:contents;}
+.dash-table{border-collapse:collapse;width:100%;font-size:11.5px;min-width:900px;}
+.dash-table th,.dash-table td{border:1px solid var(--line);padding:5px 6px;text-align:center;white-space:nowrap;}
+.dash-table thead th{background:var(--panel-2);font-weight:700;color:var(--ink);position:sticky;top:0;}
+.dash-table thead tr:first-child th{background:var(--accent);color:#fff;}
+.dash-table tbody tr:nth-child(even){background:var(--panel-2);}
+.dash-table td.cls-col{font-weight:700;background:var(--panel-2);}
+.dash-table td.grade-col{font-weight:700;color:var(--accent);}
+.dash-table tfoot td{font-weight:700;background:rgba(198,138,31,.12);}
+.dash-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;}
+.dash-note{font-size:11.5px;color:var(--muted);line-height:1.6;margin:8px 0 0;}
+
+.sl-filters{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0;}
+.sl-filters select{flex:1 1 200px;}
+.sl-lists{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;}
+.sl-col{flex:1 1 260px;min-width:220px;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--panel-2);}
+.sl-col h4{margin:0 0 10px;font-size:13px;}
+.sl-names{max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;}
+.sl-name-item{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:12.5px;}
+.sl-empty{font-size:12px;color:var(--muted);margin:6px 0;}
+</style>
+</head>
+<body>
+<div class="ink-stamp"></div>
+<header class="top">
+  <div class="wrap" style="padding:0;">
+    <h1 class="title">ಪ್ರಥಮ ಭಾಷೆ (ಕನ್ನಡ)
+      <svg class="underline" viewBox="0 0 300 14" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M2 8 C 40 3, 70 11, 110 6 S 180 2, 220 8 S 270 11, 298 5" fill="none" stroke="#c68a1f" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </h1>
+    <p class="sub">FLN ಸಾಧಿಸದ ಮಕ್ಕಳಲ್ಲಿ ಪ್ರಾವೀಣ್ಯತೆ ಸಾಧಿಸಬೇಕಾದ ಕಲಿಕಾ ಫಲಗಳ ಹಂತವಾರು ಮೌಲ್ಯಾಂಕನ · 2026-27<br>ತರಗತಿ 4 ರಿಂದ 10 · ಆರಂಭಿಕ ಹಂತದ ಮೌಲ್ಯಾಂಕನದಲ್ಲಿ ಬಿ ಗ್ರೇಡ್ ಪಡೆದ ಮಕ್ಕಳಿಗಾಗಿ</p>
+    <span class="tagpill">FLN LO-1</span>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="section-label">ವಿದ್ಯಾರ್ಥಿ<span class="dash"></span></p>
+  <div class="student-bar">
+    <div class="class-filter" id="classFilter">
+      <button type="button" class="cls-pill active" data-cls="">ಎಲ್ಲಾ</button>
+      <button type="button" class="cls-pill" data-cls="1">1ನೇ</button>
+      <button type="button" class="cls-pill" data-cls="2">2ನೇ</button>
+      <button type="button" class="cls-pill" data-cls="3">3ನೇ</button>
+      <button type="button" class="cls-pill" data-cls="4">4ನೇ</button>
+      <button type="button" class="cls-pill" data-cls="5">5ನೇ</button>
+      <button type="button" class="cls-pill" data-cls="6">6ನೇ</button>
+      <button type="button" class="cls-pill" data-cls="7">7ನೇ</button>
+      <button type="button" class="cls-pill" data-cls="8">8ನೇ</button>
+      <button type="button" class="cls-pill" data-cls="9">9ನೇ</button>
+      <button type="button" class="cls-pill" data-cls="10">10ನೇ</button>
+    </div>
+    <div class="student-row">
+      <select id="studentSelect"></select>
+      <input id="newStudentName" type="text" placeholder="ಹೊಸ ವಿದ್ಯಾರ್ಥಿ ಹೆಸರು">
+      <select id="newStudentClass" class="cls-select">
+        <option value="">ತರಗತಿ</option>
+        <option value="1">1 ನೇ ತರಗತಿ</option>
+        <option value="2">2 ನೇ ತರಗತಿ</option>
+        <option value="3">3 ನೇ ತರಗತಿ</option>
+        <option value="4">4 ನೇ ತರಗತಿ</option>
+        <option value="5">5 ನೇ ತರಗತಿ</option>
+        <option value="6">6 ನೇ ತರಗತಿ</option>
+        <option value="7">7 ನೇ ತರಗತಿ</option>
+        <option value="8">8 ನೇ ತರಗತಿ</option>
+        <option value="9">9 ನೇ ತರಗತಿ</option>
+        <option value="10">10 ನೇ ತರಗತಿ</option>
+      </select>
+      <button class="btn-accent" id="addStudentBtn">+ ಸೇರಿಸಿ</button>
+    </div>
+    <div class="row-actions">
+      <button class="btn-outline" id="bulkImportBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+        ಎಕ್ಸೆಲ್ / ಗೂಗಲ್ ಶೀಟ್‌ನಿಂದ ಆಮದು
+      </button>
+      <button class="btn-outline" id="dashboardBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 15l4-4 3 3 5-6"/></svg>
+        ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ (ತರಗತಿವಾರು)
+      </button>
+      <button class="btn-outline" id="dashboardBtn2">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 014-4h6a4 4 0 014 4v2"/><path d="M17 3.5a4 4 0 010 7"/><path d="M22 21v-2a4 4 0 00-3-3.9"/></svg>
+        ವಿದ್ಯಾರ್ಥಿ ಪಟ್ಟಿ (ಸಾಧಿಸಿದ/ಸಾಧಿಸದ)
+      </button>
+      <button class="btn-outline" id="exportBtn">ಡೇಟಾ ಎಕ್ಸ್‌ಪೋರ್ಟ್ (JSON)</button>
+      <button class="btn-outline" id="dataImportBtn">📥 ಡೇಟಾ ಇಂಪೋರ್ಟ್ (JSON)</button>
+      <input type="file" id="dataImportFile" accept=".json,application/json" style="display:none">
+      <button class="btn-outline" id="pdfCurrentBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+        ಈ ವಿದ್ಯಾರ್ಥಿ · PDF ವರದಿ
+      </button>
+      <button class="btn-outline" id="pdfAllBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+        ಎಲ್ಲಾ ವಿದ್ಯಾರ್ಥಿಗಳ PDF ವರದಿ
+      </button>
+      <button class="btn-danger" id="deleteStudentBtn">ಈ ವಿದ್ಯಾರ್ಥಿ ಅಳಿಸಿ</button>
+      <button class="btn-danger" id="deleteAllBtn">ಎಲ್ಲಾ ವಿದ್ಯಾರ್ಥಿಗಳನ್ನು ಅಳಿಸಿ</button>
+    </div>
+  </div>
+
+  <div class="lock-banner" id="lockBanner">
+    <p>🔒 ಉಚಿತ ಆವೃತ್ತಿಯಲ್ಲಿ 5 ವಿದ್ಯಾರ್ಥಿಗಳವರೆಗೆ ಮಾತ್ರ ಸೇರಿಸಬಹುದು. ಹೆಚ್ಚಿನ ವಿದ್ಯಾರ್ಥಿಗಳಿಗಾಗಿ ಅನ್‌ಲಾಕ್ ಮಾಡಿ.</p>
+    <button type="button" id="openPaywallBtn">ಅನ್‌ಲಾಕ್ ಮಾಡಿ</button>
+  </div>
+
+  <div class="overall">
+    <div class="label"><span id="overallName">ಒಟ್ಟು ಪ್ರಗತಿ</span><span id="overallPct">0%</span></div>
+    <div class="bar"><i id="overallBar" style="width:0%"></i></div>
+  </div>
+
+  <p class="section-label">ಹಂತವಾರು ಪಟ್ಟಿ<span class="dash"></span>
+    <button class="btn-ghost" id="addContentBtn" style="padding:5px 10px; font-size:11px;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+      ಪದ/ವಾಕ್ಯ/ಪ್ಯಾರಾ ಸೇರಿಸಿ
+    </button>
+  </p>
+
+  <div id="stagesRoot"></div>
+
+  <p class="install-hint">📲 ಈ ಆಪ್ ಅನ್ನು ಫೋನ್‌ ಹೋಮ್ ಸ್ಕ್ರೀನ್‌ಗೆ ಸೇರಿಸಲು ಬ್ರೌಸರ್ ಮೆನುವಿನಲ್ಲಿ "Add to Home screen / ಇನ್‌ಸ್ಟಾಲ್ ಆಪ್" ಆಯ್ಕೆ ಮಾಡಿ.</p>
+</div>
+
+<footer class="appfoot">ಪ್ರಥಮ ಭಾಷೆ · FLN ಹಂತ ಪಟ್ಟಿ · ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ · ಡೇಟಾ ಈ ಸಾಧನದಲ್ಲಿ ಮಾತ್ರ ಸಂಗ್ರಹವಾಗುತ್ತದೆ<br>Designed by PRAVEEN KULKARNI teacher GHPKBS KUSUGAL Dist Dharwad Mo:9739749483</footer>
+
+<!-- ===== Modal: Bulk import students ===== -->
+<div class="modal-overlay" id="modalImport">
+  <div class="modal-box">
+    <div class="modal-head">
+      <p class="modal-title">ವಿದ್ಯಾರ್ಥಿಗಳ ಆಮದು</p>
+      <button class="modal-close" data-close="modalImport">✕</button>
+    </div>
+    <p class="modal-sub">ಹೆಸರು ಮತ್ತು ತರಗತಿ ಇರುವ ಪಟ್ಟಿಯನ್ನು ಒಮ್ಮೆಗೇ ಸೇರಿಸಿ.</p>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="tabExcel">ಎಕ್ಸೆಲ್ / CSV</button>
+      <button class="tab-btn" data-tab="tabGSheet">ಗೂಗಲ್ ಶೀಟ್ ಲಿಂಕ್</button>
+    </div>
+
+    <div class="tab-panel active" id="tabExcel">
+      <label class="file-drop" id="excelDrop">
+        <input type="file" id="excelFile" accept=".xlsx,.xls,.csv,.txt">
+        <div>📄 .xlsx / .xls / .csv ಫೈಲ್ ಆಯ್ಕೆ ಮಾಡಿ</div>
+        <div class="fname" id="excelFname"></div>
+      </label>
+      <p class="example-note">ಮೊದಲ ಕಾಲಂನಲ್ಲಿ <code>ಹೆಸರು</code>, ಎರಡನೇ ಕಾಲಂನಲ್ಲಿ <code>ತರಗತಿ</code> ಇರಲಿ. ಶೀರ್ಷಿಕೆ ಸಾಲು ಇದ್ದರೂ ಪರವಾಗಿಲ್ಲ, ತಾನಾಗಿಯೇ ಗುರುತಿಸುತ್ತದೆ.</p>
+      <div class="preview-list" id="excelPreview" style="display:none;"></div>
+      <div class="status-msg" id="excelStatus"></div>
+      <div class="modal-actions">
+        <button class="btn-outline" data-close="modalImport">ರದ್ದು</button>
+        <button class="btn-accent" id="excelConfirmBtn">ಆಮದು ಮಾಡಿ</button>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tabGSheet">
+      <p class="field-label">ಗೂಗಲ್ ಶೀಟ್ ಲಿಂಕ್</p>
+      <input type="text" id="gsheetUrl" placeholder="https://docs.google.com/spreadsheets/d/...">
+      <p class="example-note">ಶೀಟ್‌ ಅನ್ನು "Anyone with the link → Viewer" ಎಂದು ಶೇರ್ ಮಾಡಿರಬೇಕು. ಮೊದಲ ಕಾಲಂ ಹೆಸರು, ಎರಡನೇ ಕಾಲಂ ತರಗತಿ.</p>
+      <div class="preview-list" id="gsheetPreview" style="display:none;"></div>
+      <div class="status-msg" id="gsheetStatus"></div>
+      <div class="modal-actions">
+        <button class="btn-outline" data-close="modalImport">ರದ್ದು</button>
+        <button class="btn-accent" id="gsheetFetchBtn">ಪಟ್ಟಿ ತರಿಸಿ</button>
+        <button class="btn-accent" id="gsheetConfirmBtn" style="display:none;">ಆಮದು ಮಾಡಿ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Modal: Add content (words/sentences/paragraphs) ===== -->
+<div class="modal-overlay" id="modalContent">
+  <div class="modal-box">
+    <div class="modal-head">
+      <p class="modal-title">ಹೆಚ್ಚಿನ ವಿಷಯ ಸೇರಿಸಿ</p>
+      <button class="modal-close" data-close="modalContent">✕</button>
+    </div>
+    <p class="modal-sub">ಪದ, ವಾಕ್ಯ ಅಥವಾ ಪ್ಯಾರಾಗಳನ್ನು ಟೈಪ್ ಮಾಡಿ ಅಥವಾ ಫೈಲ್ ಅಪಲೋಡ್ ಮಾಡಿ ಪಟ್ಟಿಗೆ ಸೇರಿಸಿ.</p>
+
+    <p class="field-label">ಹಂತ</p>
+    <div class="select-row">
+      <select id="contentStageSelect"></select>
+    </div>
+    <p class="field-label">ವಿಭಾಗ</p>
+    <div class="select-row">
+      <select id="contentItemSelect"></select>
+    </div>
+
+    <p class="field-label">ಪಟ್ಟಿ (ಪ್ರತಿ ಸಾಲಿಗೆ ಒಂದು ಪದ/ವಾಕ್ಯ/ಪ್ಯಾರಾ)</p>
+    <textarea id="contentTextarea" placeholder="ಉದಾ:&#10;ಬೆಟ್ಟ&#10;ಹೂವು&#10;ಚಂದ್ರಮ"></textarea>
+
+    <p class="field-label">ಅಥವಾ ಫೈಲ್ ಅಪಲೋಡ್ (.txt / .csv)</p>
+    <label class="file-drop" id="contentDrop">
+      <input type="file" id="contentFile" accept=".txt,.csv">
+      <div>📄 ಫೈಲ್ ಆಯ್ಕೆ ಮಾಡಿ (ಪ್ರತಿ ಸಾಲಿಗೆ ಒಂದು ನಮೂದು)</div>
+      <div class="fname" id="contentFname"></div>
+    </label>
+
+    <div class="status-msg" id="contentStatus"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" data-close="modalContent">ರದ್ದು</button>
+      <button class="btn-accent" id="contentConfirmBtn">ಸೇರಿಸಿ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Modal: Paywall / Unlock ===== -->
+<div class="modal-overlay" id="modalPaywall">
+  <div class="modal-box">
+    <div class="modal-head">
+      <p class="modal-title">🔓 ಪೂರ್ಣ ಆವೃತ್ತಿ ಅನ್‌ಲಾಕ್ ಮಾಡಿ</p>
+      <button class="modal-close" data-close="modalPaywall">✕</button>
+    </div>
+    <p class="modal-sub">ಉಚಿತ ಆವೃತ್ತಿಯಲ್ಲಿ 5 ವಿದ್ಯಾರ್ಥಿಗಳವರೆಗೆ ಮಾತ್ರ ಸೇರಿಸಬಹುದು. UPI ಮೂಲಕ ಪೇ ಮಾಡಿ, ಸ್ಕ್ರೀನ್‌ಶಾಟ್ WhatsApp ಮಾಡಿ, ಅನ್‌ಲಾಕ್ ಕೋಡ್ ಪಡೆಯಿರಿ.</p>
+
+    <div class="paywall-price">
+      <div class="pp-card">ಈ ಆಪ್ ಮಾತ್ರ<b>₹200</b></div>
+      <div class="pp-card bundle">ಎಲ್ಲಾ 3 ಆಪ್‌ಗಳು<br>(ಪ್ರಥಮ ಭಾಷೆ + ಗಣಿತ + ದ್ವಿತೀಯ ಭಾಷೆ)<b>₹500</b></div>
+    </div>
+
+    <div class="qr-wrap"><img id="upiQrImg" src="" alt="UPI QR ಕೋಡ್"></div>
+    <div class="upi-id-row">
+      <span>UPI ID: <b>9739749483@ybl</b></span>
+      <button type="button" class="btn-outline" id="copyUpiBtn">ಕಾಪಿ</button>
+    </div>
+    <a class="wa-btn" id="waBtn" href="#" target="_blank" rel="noopener">📲 ಪೇಮೆಂಟ್ ಸ್ಕ್ರೀನ್‌ಶಾಟ್ WhatsApp ಮಾಡಿ (9739749483)</a>
+
+    <p class="field-label">ಪೇ ಮಾಡಿದ ನಂತರ · ಅನ್‌ಲಾಕ್ ಕೋಡ್ ಎಂಟರ್ ಮಾಡಿ</p>
+    <div class="unlock-row">
+      <input type="text" id="unlockPhone" placeholder="ನಿಮ್ಮ 10 ಅಂಕೆ ಫೋನ್ ನಂಬರ್" maxlength="10" inputmode="numeric">
+      <input type="text" id="unlockCode" placeholder="ಕೋಡ್ (ಉದಾ: A1B2-C3D4)">
+    </div>
+    <div class="status-msg" id="unlockStatus"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" data-close="modalPaywall">ನಂತರ</button>
+      <button class="btn-accent" id="unlockConfirmBtn">ಅನ್‌ಲಾಕ್ ಮಾಡಿ</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== Modal: Class-wise Dashboard ===== -->
+<div class="modal-overlay" id="modalDashboard">
+  <div class="modal-box" style="max-width:96vw; width:1150px;">
+    <div class="modal-head">
+      <p class="modal-title">📊 ಕ್ರೋಢೀಕರಣ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ (ತರಗತಿವಾರು)</p>
+      <button class="modal-close" data-close="modalDashboard">✕</button>
+    </div>
+    <p class="modal-sub">ಪ್ರತಿ ತರಗತಿಯಲ್ಲಿ ಎಷ್ಟು ವಿದ್ಯಾರ್ಥಿಗಳು ಪ್ರತಿ ಹಂತ/ಅಂಶ ಪೂರ್ಣಗೊಳಿಸಿದ್ದಾರೆ ಎಂಬ ಸ್ವಯಂಚಾಲಿತ ಸಾರಾಂಶ — ನಮೂದಿಸಿದ ಡೇಟಾದಿಂದ ನೇರವಾಗಿ ಲೆಕ್ಕಹಾಕಲಾಗಿದೆ.</p>
+    <div class="dash-scroll">
+      <table class="dash-table" id="dashTable"></table>
+    </div>
+    <p class="dash-note">📌 ಟಿಪ್ಪಣಿ: "ಆರಂಭಿಕ ಹಂತ" ಕಾಲಂಗಳು ಪ್ರತಿ ವಿದ್ಯಾರ್ಥಿ ಈಗ ಇರುವ (ಇನ್ನೂ ಪೂರ್ಣಗೊಳಿಸದ ಮೊದಲ) ಹಂತವನ್ನು ತೋರಿಸುತ್ತವೆ. "ಗ್ರೇಡ್ A/B" ಕಾಲಂ = ಎಲ್ಲಾ ಹಂತಗಳನ್ನೂ (100%) ಪೂರ್ಣಗೊಳಿಸಿದ ವಿದ್ಯಾರ್ಥಿಗಳ ಸಂಖ್ಯೆ. ತರಗತಿ ಗುರುತಿಸಲಾಗದ ವಿದ್ಯಾರ್ಥಿಗಳು ಈ ಪಟ್ಟಿಯಲ್ಲಿ ಸೇರಿಲ್ಲ.</p>
+    <div class="modal-actions">
+      <button class="btn-outline" data-close="modalDashboard">ಮುಚ್ಚಿ</button>
+      <button class="btn-outline" id="dashPrintBtn">🖨️ ಪ್ರಿಂಟ್</button>
+      <button class="btn-accent" id="dashExcelBtn">📥 Excel ಡೌನ್‌ಲೋಡ್</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== Modal: Student List Dashboard (Achieved / Not Achieved) ===== -->
+<div class="modal-overlay" id="modalStudentList">
+  <div class="modal-box" style="max-width:96vw; width:900px;">
+    <div class="modal-head">
+      <p class="modal-title">👥 ವಿದ್ಯಾರ್ಥಿ ಪಟ್ಟಿ · ಸಾಧಿಸಿದ / ಸಾಧಿಸದ (ಕಂಟೆಂಟ್ ವೈಸ್)</p>
+      <button class="modal-close" data-close="modalStudentList">✕</button>
+    </div>
+    <p class="modal-sub">ತರಗತಿ ಮತ್ತು ಕಂಟೆಂಟ್ (ಅಂಶ) ಆಯ್ಕೆ ಮಾಡಿ — ಆ ಅಂಶವನ್ನು ಸಾಧಿಸಿದ ಮತ್ತು ಸಾಧಿಸದ ವಿದ್ಯಾರ್ಥಿಗಳ ಹೆಸರುಗಳು ಕಾಣಿಸುತ್ತವೆ.</p>
+    <div class="sl-filters">
+      <select id="slClassSelect">
+        <option value="">ಎಲ್ಲಾ ತರಗತಿ</option>
+        <option value="1">1 ನೇ ತರಗತಿ</option>
+        <option value="2">2 ನೇ ತರಗತಿ</option>
+        <option value="3">3 ನೇ ತರಗತಿ</option>
+        <option value="4">4 ನೇ ತರಗತಿ</option>
+        <option value="5">5 ನೇ ತರಗತಿ</option>
+        <option value="6">6 ನೇ ತರಗತಿ</option>
+        <option value="7">7 ನೇ ತರಗತಿ</option>
+        <option value="8">8 ನೇ ತರಗತಿ</option>
+        <option value="9">9 ನೇ ತರಗತಿ</option>
+        <option value="10">10 ನೇ ತರಗತಿ</option>
+      </select>
+      <select id="slContentSelect"></select>
+    </div>
+    <div class="sl-lists">
+      <div class="sl-col">
+        <h4>✅ ಸಾಧಿಸಿದ ವಿದ್ಯಾರ್ಥಿಗಳು (<span id="slAchievedCount">0</span>)</h4>
+        <div class="sl-names" id="slAchievedList"></div>
+      </div>
+      <div class="sl-col">
+        <h4>❌ ಸಾಧಿಸದ ವಿದ್ಯಾರ್ಥಿಗಳು (<span id="slNotAchievedCount">0</span>)</h4>
+        <div class="sl-names" id="slNotAchievedList"></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" data-close="modalStudentList">ಮುಚ್ಚಿ</button>
+      <button class="btn-outline" id="slPrintBtn">🖨️ ಪ್ರಿಂಟ್</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== Modal: Data Import (JSON, from another phone) ===== -->
+<div class="modal-overlay" id="modalDataImport">
+  <div class="modal-box">
+    <div class="modal-head">
+      <p class="modal-title">📥 ಡೇಟಾ ಇಂಪೋರ್ಟ್ ಖಚಿತಪಡಿಸಿ</p>
+      <button class="modal-close" data-close="modalDataImport">✕</button>
+    </div>
+    <p class="modal-sub">ಆಮದು ಮಾಡುತ್ತಿರುವ ಫೈಲ್‌ನಲ್ಲಿ <b id="diIncomingCount">0</b> ವಿದ್ಯಾರ್ಥಿಗಳಿದ್ದಾರೆ. ಈಗ ಈ ಸಾಧನದಲ್ಲಿ <b id="diCurrentCount">0</b> ವಿದ್ಯಾರ್ಥಿಗಳಿದ್ದಾರೆ.</p>
+    <p class="field-label">ಹೇಗೆ ಸೇರಿಸಬೇಕು?</p>
+    <ul style="font-size:12.5px; color:var(--muted); line-height:1.7; margin:0 0 14px; padding-left:18px;">
+      <li><b>ವಿಲೀನಗೊಳಿಸಿ (Merge):</b> ಈಗಿರುವ ವಿದ್ಯಾರ್ಥಿಗಳು ಹಾಗೆಯೇ ಇರುತ್ತಾರೆ; ಫೈಲ್‌ನಲ್ಲಿರುವ ಹೊಸ ವಿದ್ಯಾರ್ಥಿಗಳು ಸೇರುತ್ತಾರೆ; ಒಂದೇ ಹೆಸರಿನ ವಿದ್ಯಾರ್ಥಿ ಇದ್ದರೆ ಫೈಲ್‌ನ ಡೇಟಾ ಅದನ್ನು ಬದಲಾಯಿಸುತ್ತದೆ. (ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ)</li>
+      <li><b>ಸಂಪೂರ್ಣ ಬದಲಾಯಿಸಿ (Replace):</b> ಈಗಿರುವ ಎಲ್ಲಾ ವಿದ್ಯಾರ್ಥಿಗಳ ಡೇಟಾ ಅಳಿಸಿ, ಫೈಲ್‌ನ ಡೇಟಾ ಮಾತ್ರ ಇಡುತ್ತದೆ.</li>
+    </ul>
+    <div class="status-msg" id="dataImportStatus"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" data-close="modalDataImport">ರದ್ದು</button>
+      <button class="btn-danger" id="diReplaceBtn">ಸಂಪೂರ್ಣ ಬದಲಾಯಿಸಿ</button>
+      <button class="btn-accent" id="diMergeBtn">ವಿಲೀನಗೊಳಿಸಿ</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STAGES = [{"name": "ಅಕ್ಷರ ಹಂತ", "range": "", "items": [{"label": "ಸ್ವರಗಳು", "units": ["ಅ", "ಆ", "ಇ", "ಈ", "ಉ", "ಊ", "ಋ", "ಎ", "ಏ", "ಐ", "ಒ", "ಓ", "ಔ", "ಅಂ", "ಅಃ"]}, {"label": "ವ್ಯಂಜನಗಳು", "units": ["ಕ", "ಖ", "ಗ", "ಘ", "ಙ", "ಚ", "ಛ", "ಜ", "ಝ", "ಞ", "ಟ", "ಠ", "ಡ", "ಢ", "ಣ", "ತ", "ಥ", "ದ", "ಧ", "ನ", "ಪ", "ಫ", "ಬ", "ಭ", "ಮ", "ಯ", "ರ", "ಲ", "ವ", "ಶ", "ಷ", "ಸ", "ಹ", "ಳ"]}, {"label": "ಕಾಗುಣಿತಾಕ್ಷರಗಳು", "units": ["ಕ", "ಕಾ", "ಕಿ", "ಕೀ", "ಕು", "ಕೂ", "ಕೃ", "ಕೆ", "ಕೇ", "ಕೈ", "ಕೊ", "ಕೋ", "ಕೌ", "ಕಂ", "ಕಃ"]}, {"label": "ಸಜಾತೀಯ ಒತ್ತಕ್ಷರಗಳು", "units": ["ಕ್ಕ", "ಗ್ಗ", "ಙ್ಙ", "ಚ್ಚ", "ಜ್ಜ", "ಞ್ಞ", "ಟ್ಟ", "ಡ್ಡ", "ಣ್ಣ", "ತ್ತ", "ದ್ದ", "ನ್ನ", "ಪ್ಪ", "ಬ್ಬ", "ಮ್ಮ", "ಯ್ಯ", "ಲ್ಲ", "ವ್ವ", "ಶ್ಶ", "ಸ್ಸ", "ಳ್ಳ"]}, {"label": "ವಿಜಾತೀಯ ಒತ್ತಕ್ಷರಗಳು", "units": ["ಕ್ಷ", "ಜ್ಞ", "ತ್ರ", "ದ್ರ", "ಪ್ರ", "ಕ್ರ", "ಗ್ರ", "ಬ್ರ", "ಶ್ರ", "ಸ್ಕ", "ಸ್ತ", "ಸ್ಪ", "ಷ್ಟ", "ನ್ಯ", "ದ್ಯ", "ವ್ಯ", "ಸ್ವ", "ಹ್ಮ"]}]}, {"name": "ಪದ ಹಂತ", "range": "", "items": [{"label": "ಒತ್ತಕ್ಷರ ರಹಿತ ಪದಗಳು", "units": ["ಮನೆ", "ಆಟ", "ನೀರು", "ಗಿಡ", "ಶಾಲೆ", "ಬಾಗಿಲು", "ಕೋಳಿ", "ಬಾಳೆ", "ಮಳೆ", "ಗುಡಿ"]}, {"label": "ಒತ್ತಕ್ಷರ ಸಹಿತ ಪದಗಳು (ಸಜಾತೀಯ)", "units": ["ಅಕ್ಕ", "ಕಪ್ಪೆ", "ಬೆಕ್ಕು", "ಚಿಟ್ಟೆ", "ಹುಣ್ಣಿಮೆ", "ಎಲ್ಲಾ", "ಅಮ್ಮ", "ಅಪ್ಪ", "ಗುಟ್ಟು", "ಕಚ್ಚು"]}, {"label": "ಒತ್ತಕ್ಷರ ಸಹಿತ ಪದಗಳು (ವಿಜಾತೀಯ)", "units": ["ಸ್ನೇಹಿತ", "ಕ್ಷಣ", "ಸ್ತಂಭ", "ಪ್ರೀತಿ", "ಗ್ರಂಥ", "ಶಾಸ್ತ್ರ", "ವಿದ್ಯಾರ್ಥಿ", "ಸ್ವರ", "ಚಂದ್ರ", "ಸಂಸ್ಕೃತಿ"]}]}, {"name": "ವಾಕ್ಯ ಹಂತ", "range": "3 ರಿಂದ 5 ವಾಕ್ಯಗಳು", "items": [{"label": "ಒತ್ತಕ್ಷರ ರಹಿತ ವಾಕ್ಯಗಳು", "units": ["ಇದು ನನ್ನ ಮನೆ.", "ನಾನು ಶಾಲೆಗೆ ಹೋಗುವೆ.", "ಗಿಡಕ್ಕೆ ನೀರು ಹಾಕು.", "ಕೋಳಿ ಮೊಟ್ಟೆ ಇಟ್ಟಿತು.", "ಬಾಗಿಲು ತೆರೆ."]}, {"label": "ಒತ್ತಕ್ಷರ ಸಹಿತ ವಾಕ್ಯಗಳು (ಸಜಾತೀಯ)", "units": ["ಅಕ್ಕ ಶಾಲೆಗೆ ಹೋದಳು.", "ಬೆಕ್ಕು ಹಾಲು ಕುಡಿಯಿತು.", "ಅಮ್ಮ ಅಡುಗೆ ಮಾಡಿದಳು.", "ಚಿಟ್ಟೆ ಹೂವಿನ ಮೇಲೆ ಕುಳಿತಿತು."]}, {"label": "ಒತ್ತಕ್ಷರ ಸಹಿತ ವಾಕ್ಯಗಳು (ವಿಜಾತೀಯ)", "units": ["ನನ್ನ ಸ್ನೇಹಿತ ಒಳ್ಳೆಯವನು.", "ವಿದ್ಯಾರ್ಥಿಗಳು ಪಾಠ ಕಲಿತರು.", "ಚಂದ್ರ ಆಕಾಶದಲ್ಲಿ ಇದ್ದಾನೆ.", "ಗುರುಗಳು ಪ್ರೀತಿಯಿಂದ ಕಲಿಸಿದರು."]}]}, {"name": "ಪ್ಯಾರಾ ಹಂತ", "range": "3 ರಿಂದ 5 ವಾಕ್ಯಗಳ ಪ್ಯಾರಾ", "items": [{"label": "ಒತ್ತಕ್ಷರ ರಹಿತ ಪ್ಯಾರಾ", "units": ["ನನ್ನ ಶಾಲೆ", "ನನ್ನ ಊರು", "ಮಳೆಗಾಲ", "ನನ್ನ ಗೆಳೆಯ"]}, {"label": "ಒತ್ತಕ್ಷರ ಸಹಿತ ಪ್ಯಾರಾ (ಸಜಾತೀಯ)", "units": ["ನನ್ನ ಅಮ್ಮ", "ಹಬ್ಬದ ದಿನ", "ನಮ್ಮ ಮನೆ"]}, {"label": "ಒತ್ತಕ್ಷರ ಸಹಿತ ಪ್ಯಾರಾ (ವಿಜಾತೀಯ)", "units": ["ನನ್ನ ಗುರುಗಳು", "ವಿದ್ಯಾರ್ಥಿ ಜೀವನ", "ಶಾಲಾ ಪ್ರವಾಸ"]}]}];
+const PERIODS = ["ಆಗಸ್ಟ್ 21–31, 2026", "ಸೆಪ್ಟೆಂಬರ್ 1–15, 2026", "ಸೆಪ್ಟೆಂಬರ್ 16–30, 2026", "ಅಕ್ಟೋಬರ್ 1–31, 2026"];
+const STORAGE_KEY = "fln_prathama_bhashe_v1";
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function loadData() {
+  let d;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) d = JSON.parse(raw);
+  } catch(e) {}
+  if (!d) d = { students: {}, current: null };
+  if (!d.customUnits) d.customUnits = {};
+  // migrate old positional unit ids (s{si}_i{ii}_u{ui}) -> text-based ids
+  if (!d.migratedV2) {
+    Object.keys(d.students || {}).forEach(sname => {
+      const stu = d.students[sname];
+      if (!stu.checks) return;
+      const newChecks = {};
+      Object.keys(stu.checks).forEach(k => {
+        const m = k.match(/^s(\d+)_i(\d+)_u(\d+)$/);
+        if (m && stu.checks[k]) {
+          const si = parseInt(m[1],10), ii = parseInt(m[2],10), ui = parseInt(m[3],10);
+          const st = STAGES[si];
+          const text = st && st.items[ii] && st.items[ii].units[ui];
+          if (text !== undefined) {
+            newChecks[unitId(si, ii, text)] = true;
+            return;
+          }
+        }
+        newChecks[k] = stu.checks[k];
+      });
+      stu.checks = newChecks;
+    });
+    d.migratedV2 = true;
+    saveData(d);
+  }
+  return d;
+}
+function saveData(d) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch(e) {}
+}
+
+let DATA = loadData();
+
+/* ================= Paywall / Unlock ================= */
+const APP_ID = "prathama";
+const APP_LABEL = "ಪ್ರಥಮ ಭಾಷೆ";
+const FREE_STUDENT_LIMIT = 5;
+const UPI_ID = "9739749483@ybl";
+const UPI_NAME = "Praveen Kulkarni";
+const WHATSAPP_NUMBER = "919739749483";
+const UNLOCK_SECRET = "GHPKBSKUSUGAL2026";
+const UNLOCK_KEY = STORAGE_KEY + "_unlocked";
+
+function computeUnlockCode(phone, scope) {
+  const digits = (phone || "").replace(/\D/g, "");
+  if (digits.length !== 10) return null;
+  const str = digits + "|" + scope + "|" + UNLOCK_SECRET;
+  let h1 = 0, h2 = 0;
+  for (let i = 0; i < str.length; i++) {
+    const c = str.charCodeAt(i);
+    h1 = (h1 * 31 + c) >>> 0;
+    h2 = (h2 * 131 + c + i) >>> 0;
+  }
+  let code = (h1.toString(36) + h2.toString(36)).toUpperCase().replace(/[^A-Z0-9]/g, "");
+  while (code.length < 8) code += "X";
+  code = code.slice(0, 8);
+  return code.slice(0, 4) + "-" + code.slice(4, 8);
+}
+
+function isUnlocked() {
+  try { return localStorage.getItem(UNLOCK_KEY) === "1"; } catch(e) { return false; }
+}
+function setUnlocked() {
+  try { localStorage.setItem(UNLOCK_KEY, "1"); } catch(e) {}
+}
+function isLocked() {
+  return !isUnlocked() && Object.keys(DATA.students).length >= FREE_STUDENT_LIMIT;
+}
+function updateLockUI() {
+  const banner = document.getElementById("lockBanner");
+  if (banner) banner.classList.toggle("show", isLocked());
+}
+function setupPaywallModal() {
+  const qrData = "upi://pay?pa=" + encodeURIComponent(UPI_ID) + "&pn=" + encodeURIComponent(UPI_NAME) + "&am=200&cu=INR&tn=" + encodeURIComponent(APP_LABEL + " unlock");
+  const qrImg = document.getElementById("upiQrImg");
+  if (qrImg) qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(qrData);
+  const waMsg = "ನಮಸ್ಕಾರ, ನಾನು " + APP_LABEL + " ಆಪ್\u200cಗಾಗಿ UPI ಪೇಮೆಂಟ್ ಮಾಡಿದ್ದೇನೆ. ಸ್ಕ್ರೀನ್\u200cಶಾಟ್ ಇಲ್ಲಿದೆ.";
+  const waBtn = document.getElementById("waBtn");
+  if (waBtn) waBtn.href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(waMsg);
+}
+function guardedClick(btnId) {
+  const el = document.getElementById(btnId);
+  if (!el) return;
+  el.addEventListener("click", (e) => {
+    if (isLocked()) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      openModal("modalPaywall");
+    }
+  });
+}
+["addStudentBtn", "excelConfirmBtn", "gsheetConfirmBtn"].forEach(guardedClick);
+
+function wirePaywallModal() {
+  const copyBtn = document.getElementById("copyUpiBtn");
+  if (copyBtn) copyBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(UPI_ID).then(() => {
+      setStatus("unlockStatus", "ok", "UPI ID ಕಾಪಿ ಆಗಿದೆ.");
+      setTimeout(() => clearStatus("unlockStatus"), 1500);
+    }).catch(() => {});
+  });
+  const confirmBtn = document.getElementById("unlockConfirmBtn");
+  if (confirmBtn) confirmBtn.addEventListener("click", () => {
+    const phone = document.getElementById("unlockPhone").value.trim();
+    const code = document.getElementById("unlockCode").value.trim().toUpperCase();
+    if (!/^\d{10}$/.test(phone)) { setStatus("unlockStatus", "err", "ಸರಿಯಾದ 10 ಅಂಕೆ ಫೋನ್ ನಂಬರ್ ಹಾಕಿ."); return; }
+    if (!code) { setStatus("unlockStatus", "err", "ಕೋಡ್ ಎಂಟರ್ ಮಾಡಿ."); return; }
+    const validSingle = computeUnlockCode(phone, APP_ID);
+    const validBundle = computeUnlockCode(phone, "BUNDLE");
+    if (code === validSingle || code === validBundle) {
+      setUnlocked();
+      setStatus("unlockStatus", "ok", "ಅನ್\u200cಲಾಕ್ ಆಗಿದೆ! ಧನ್ಯವಾದಗಳು.");
+      updateLockUI();
+      setTimeout(() => closeModal("modalPaywall"), 1000);
+    } else {
+      setStatus("unlockStatus", "err", "ಕೋಡ್ ಸರಿಯಿಲ್ಲ. ಫೋನ್ ನಂಬರ್ ಸರಿಯಾಗಿ ಹಾಕಿರುವುದನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.");
+    }
+  });
+  const openBtn = document.getElementById("openPaywallBtn");
+  if (openBtn) openBtn.addEventListener("click", () => openModal("modalPaywall"));
+}
+setupPaywallModal();
+wirePaywallModal();
+updateLockUI();
+
+
+function ensureStudent(name) {
+  if (!DATA.students[name]) DATA.students[name] = { checks: {}, open: {} };
+  if (!DATA.students[name].open) DATA.students[name].open = {};
+}
+
+function itemKey(si, ii) { return "s" + si + "_i" + ii; }
+function unitId(si, ii, u) { return itemKey(si, ii) + "_u_" + u; }
+function getUnits(si, ii) {
+  const base = STAGES[si].items[ii].units;
+  const extra = DATA.customUnits[itemKey(si, ii)] || [];
+  return base.concat(extra);
+}
+
+function currentStudent() {
+  if (!DATA.current || !DATA.students[DATA.current]) {
+    const names = Object.keys(DATA.students);
+    DATA.current = names.length ? names[0] : null;
+  }
+  return DATA.current;
+}
+
+function studentLabel(name, cls) {
+  return cls ? (name + " · " + cls + "ನೇ ತರಗತಿ") : name;
+}
+
+function studentClassOf(label) {
+  const m = label.match(/ · (\d+)ನೇ ತರಗತಿ$/);
+  return m ? m[1] : "";
+}
+
+let CURRENT_CLASS_FILTER = "";
+
+function resetClassFilterUI() {
+  CURRENT_CLASS_FILTER = "";
+  document.querySelectorAll("#classFilter .cls-pill").forEach(b => b.classList.toggle("active", b.dataset.cls === ""));
+}
+
+function renderStudentSelect() {
+  const sel = document.getElementById("studentSelect");
+  sel.innerHTML = "";
+  let names = Object.keys(DATA.students);
+  if (CURRENT_CLASS_FILTER) names = names.filter(n => studentClassOf(n) === CURRENT_CLASS_FILTER);
+
+  if (names.length === 0) {
+    const opt = document.createElement("option");
+    opt.textContent = CURRENT_CLASS_FILTER ? "ಈ ತರಗತಿಯಲ್ಲಿ ವಿದ್ಯಾರ್ಥಿಗಳಿಲ್ಲ" : "ವಿದ್ಯಾರ್ಥಿಯನ್ನು ಸೇರಿಸಿ";
+    opt.disabled = true; opt.selected = true;
+    sel.appendChild(opt);
+    DATA.current = null;
+    saveData(DATA);
+    return;
+  }
+  if (!DATA.current || !names.includes(DATA.current)) {
+    DATA.current = names[0];
+    saveData(DATA);
+  }
+  names.forEach(n => {
+    const opt = document.createElement("option");
+    opt.value = n; opt.textContent = n;
+    if (n === DATA.current) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+document.querySelectorAll("#classFilter .cls-pill").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("#classFilter .cls-pill").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    CURRENT_CLASS_FILTER = btn.dataset.cls;
+    renderStudentSelect();
+    renderStages();
+    refreshProgress();
+  });
+});
+
+function computeItemDone(student, si, ii) {
+  const units = getUnits(si, ii);
+  let done = 0;
+  units.forEach(u => {
+    if (DATA.students[student].checks[unitId(si, ii, u)]) done++;
+  });
+  return { done, total: units.length };
+}
+
+function computeStagePct(student, si) {
+  const items = STAGES[si].items;
+  let totalUnits = 0, doneUnits = 0;
+  items.forEach((_, ii) => {
+    const r = computeItemDone(student, si, ii);
+    totalUnits += r.total; doneUnits += r.done;
+  });
+  return totalUnits ? Math.round((doneUnits / totalUnits) * 100) : 0;
+}
+
+function computeOverallPct(student) {
+  let totalUnits = 0, doneUnits = 0;
+  STAGES.forEach((st, si) => {
+    st.items.forEach((_, ii) => {
+      const r = computeItemDone(student, si, ii);
+      totalUnits += r.total; doneUnits += r.done;
+    });
+  });
+  return totalUnits ? Math.round((doneUnits / totalUnits) * 100) : 0;
+}
+
+function renderStages() {
+  const root = document.getElementById("stagesRoot");
+  root.innerHTML = "";
+  const student = currentStudent();
+
+  STAGES.forEach((st, si) => {
+    const stageEl = document.createElement("div");
+    stageEl.className = "stage" + (si === 0 ? " open" : "");
+    stageEl.dataset.si = si;
+
+    const pct = student ? computeStagePct(student, si) : 0;
+
+    stageEl.innerHTML = `
+      <div class="stage-head">
+        <div class="stage-num">${si+1}</div>
+        <div class="stage-info">
+          <p class="stage-name">${st.name}</p>
+          <p class="stage-period">${PERIODS[si]}</p>
+        </div>
+        <div class="stage-pct">${pct}%</div>
+        <div class="chev">▾</div>
+      </div>
+      ${st.range ? `<div class="stage-range">${st.range}</div>` : ""}
+      <div class="mini-bar"><i style="width:${pct}%"></i></div>
+      <div class="stage-body"></div>
+    `;
+
+    const body = stageEl.querySelector(".stage-body");
+    st.items.forEach((it, ii) => {
+      const ikey = itemKey(si, ii);
+      const isOpenItem = student && DATA.students[student].open[ikey];
+      const row = document.createElement("div");
+      row.className = "item" + (isOpenItem ? " open" : "");
+
+      const baseCount = it.units.length;
+      const units = getUnits(si, ii);
+      const chipsHtml = units.map((u, ui) => {
+        const uid = unitId(si, ii, u);
+        const on = student && DATA.students[student].checks[uid];
+        const isCustom = ui >= baseCount;
+        return `<button type="button" class="unit-chip${on ? " on" : ""}${isCustom ? " custom" : ""}" data-uid="${uid}" data-unit="${escapeHtml(u)}" data-key="${ikey}" data-custom="${isCustom ? 1 : 0}">${escapeHtml(u)}${isCustom ? '<span class="chip-del" data-del="1" title="ಅಳಿಸಿ">✕</span>' : ''}</button>`;
+      }).join("");
+
+      row.innerHTML = `
+        <div class="item-head">
+          <span class="item-name">${it.label}</span>
+          <span class="item-frac">0/0</span>
+          <span class="item-chev">▾</span>
+        </div>
+        <div class="unit-wrap">
+          <p class="unit-hint">ವಿದ್ಯಾರ್ಥಿಗೆ ಬರುವುದನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ ಗ್ರೀನ್ ಮಾಡಿ · ಬಾರದಿದ್ದರೆ ರೆಡ್‌ನಲ್ಲೇ ಇರಲಿ</p>
+          <div class="unit-grid">${chipsHtml}</div>
+          <div class="item-add-row">
+            <button type="button" class="item-add-btn" data-stage="${si}" data-item="${ii}">+ ಈ ವಿಭಾಗಕ್ಕೆ ಸೇರಿಸಿ</button>
+          </div>
+        </div>
+      `;
+
+      const fracEl = row.querySelector(".item-frac");
+      function updateFrac() {
+        const r = student ? computeItemDone(student, si, ii) : {done:0,total:getUnits(si,ii).length};
+        fracEl.textContent = r.done + "/" + r.total;
+        fracEl.classList.toggle("full", r.total > 0 && r.done === r.total);
+      }
+      updateFrac();
+
+      row.querySelectorAll(".unit-chip").forEach(chip => {
+        chip.addEventListener("click", (e) => {
+          if (e.target.closest("[data-del]")) {
+            e.stopPropagation();
+            const unitText = chip.dataset.unit;
+            const key = chip.dataset.key;
+            if (!confirm('"' + unitText + '" ಅಳಿಸಬೇಕೆ?')) return;
+            const arr = DATA.customUnits[key] || [];
+            DATA.customUnits[key] = arr.filter(x => x !== unitText);
+            saveData(DATA);
+            renderStages();
+            refreshProgress();
+            return;
+          }
+          if (!student) return;
+          const uid = chip.dataset.uid;
+          const newVal = !DATA.students[student].checks[uid];
+          DATA.students[student].checks[uid] = newVal;
+          chip.classList.toggle("on", newVal);
+          saveData(DATA);
+          updateFrac();
+          refreshProgress();
+        });
+      });
+
+      row.querySelector(".item-add-btn").addEventListener("click", (e) => {
+        e.stopPropagation();
+        openContentModal(si, ii);
+      });
+
+      row.querySelector(".item-head").addEventListener("click", () => {
+        const nowOpen = !row.classList.contains("open");
+        row.classList.toggle("open", nowOpen);
+        if (student) {
+          DATA.students[student].open[ikey] = nowOpen;
+          saveData(DATA);
+        }
+        applyStageBodyHeights();
+      });
+
+      body.appendChild(row);
+    });
+
+    stageEl.querySelector(".stage-head").addEventListener("click", () => {
+      const isOpen = stageEl.classList.contains("open");
+      document.querySelectorAll(".stage").forEach(s => s.classList.remove("open"));
+      if (!isOpen) stageEl.classList.add("open");
+      applyStageBodyHeights();
+    });
+
+    root.appendChild(stageEl);
+  });
+  applyStageBodyHeights();
+}
+
+function applyStageBodyHeights() {
+  document.querySelectorAll(".stage").forEach(stageEl => {
+    const body = stageEl.querySelector(".stage-body");
+    if (stageEl.classList.contains("open")) {
+      body.style.maxHeight = body.scrollHeight + 40 + "px";
+    } else {
+      body.style.maxHeight = "0px";
+    }
+  });
+}
+
+function refreshProgress() {
+  const student = currentStudent();
+  document.querySelectorAll(".stage").forEach(stageEl => {
+    const si = parseInt(stageEl.dataset.si, 10);
+    const pct = student ? computeStagePct(student, si) : 0;
+    stageEl.querySelector(".stage-pct").textContent = pct + "%";
+    stageEl.querySelector(".mini-bar > i").style.width = pct + "%";
+  });
+  const overall = student ? computeOverallPct(student) : 0;
+  document.getElementById("overallPct").textContent = overall + "%";
+  document.getElementById("overallBar").style.width = overall + "%";
+  document.getElementById("overallName").textContent = student ? (student + " — ಒಟ್ಟು ಪ್ರಗತಿ") : "ಒಟ್ಟು ಪ್ರಗತಿ";
+  applyStageBodyHeights();
+  updateLockUI();
+}
+
+document.getElementById("studentSelect").addEventListener("change", (e) => {
+  DATA.current = e.target.value;
+  saveData(DATA);
+  renderStages();
+  refreshProgress();
+});
+
+document.getElementById("addStudentBtn").addEventListener("click", () => {
+  const input = document.getElementById("newStudentName");
+  const clsSel = document.getElementById("newStudentClass");
+  const name = input.value.trim();
+  if (!name) return;
+  const label = studentLabel(name, clsSel.value);
+  ensureStudent(label);
+  DATA.current = label;
+  input.value = "";
+  clsSel.value = "";
+  saveData(DATA);
+  resetClassFilterUI();
+  renderStudentSelect();
+  renderStages();
+  refreshProgress();
+});
+
+document.getElementById("deleteStudentBtn").addEventListener("click", () => {
+  const student = currentStudent();
+  if (!student) return;
+  if (!confirm(student + " ರ ಡೇಟಾ ಅಳಿಸಬೇಕೆ?")) return;
+  delete DATA.students[student];
+  DATA.current = null;
+  saveData(DATA);
+  renderStudentSelect();
+  renderStages();
+  refreshProgress();
+});
+
+document.getElementById("deleteAllBtn").addEventListener("click", () => {
+  const count = Object.keys(DATA.students).length;
+  if (!count) return;
+  if (!confirm("ಎಲ್ಲಾ " + count + " ವಿದ್ಯಾರ್ಥಿಗಳ ಡೇಟಾ ಶಾಶ್ವತವಾಗಿ ಅಳಿಸಬೇಕೆ? ಈ ಕ್ರಿಯೆಯನ್ನು ರದ್ದುಗೊಳಿಸಲಾಗುವುದಿಲ್ಲ.")) return;
+  DATA.students = {};
+  DATA.current = null;
+  saveData(DATA);
+  resetClassFilterUI();
+  renderStudentSelect();
+  renderStages();
+  refreshProgress();
+});
+
+document.getElementById("exportBtn").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(DATA, null, 2)], {type: "application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "prathama_bhashe_progress.json";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+/* ================= Data Import (JSON restore / transfer from another phone) ================= */
+let PENDING_IMPORT_DATA = null;
+
+document.getElementById("dataImportBtn").addEventListener("click", () => {
+  document.getElementById("dataImportFile").value = "";
+  document.getElementById("dataImportFile").click();
+});
+
+document.getElementById("dataImportFile").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    let parsed;
+    try {
+      parsed = JSON.parse(ev.target.result);
+    } catch (err) {
+      alert("ಈ ಫೈಲ್ ಸರಿಯಾದ JSON ಅಲ್ಲ. ಈ ಆಪ್\u200cನಿಂದಲೇ 'ಡೇಟಾ ಎಕ್ಸ್\u200cಪೋರ್ಟ್' ಮಾಡಿದ ಫೈಲ್ ಬಳಸಿ.");
+      return;
+    }
+    if (!parsed || typeof parsed !== "object" || !parsed.students || typeof parsed.students !== "object") {
+      alert("ಈ ಫೈಲ್\u200cನಲ್ಲಿ ಸರಿಯಾದ ವಿದ್ಯಾರ್ಥಿ ಡೇಟಾ ಕಾಣಲಿಲ್ಲ. ಈ ಆಪ್\u200cನಿಂದಲೇ ಎಕ್ಸ್\u200cಪೋರ್ಟ್ ಮಾಡಿದ ಫೈಲ್ ಬಳಸಿ.");
+      return;
+    }
+    PENDING_IMPORT_DATA = parsed;
+    document.getElementById("diIncomingCount").textContent = Object.keys(parsed.students).length;
+    document.getElementById("diCurrentCount").textContent = Object.keys(DATA.students).length;
+    clearStatus("dataImportStatus");
+    openModal("modalDataImport");
+  };
+  reader.readAsText(file);
+});
+
+function finishDataImport(msg) {
+  PENDING_IMPORT_DATA = null;
+  saveData(DATA);
+  resetClassFilterUI();
+  renderStudentSelect();
+  renderStages();
+  refreshProgress();
+  updateLockUI();
+  closeModal("modalDataImport");
+  alert(msg);
+}
+
+document.getElementById("diMergeBtn").addEventListener("click", () => {
+  if (!PENDING_IMPORT_DATA) return;
+  Object.keys(PENDING_IMPORT_DATA.students).forEach(name => {
+    DATA.students[name] = PENDING_IMPORT_DATA.students[name];
+  });
+  if (PENDING_IMPORT_DATA.customUnits) {
+    Object.keys(PENDING_IMPORT_DATA.customUnits).forEach(key => {
+      const incoming = PENDING_IMPORT_DATA.customUnits[key] || [];
+      const existing = DATA.customUnits[key] || [];
+      DATA.customUnits[key] = Array.from(new Set(existing.concat(incoming)));
+    });
+  }
+  finishDataImport("ಡೇಟಾ ವಿಲೀನಗೊಳಿಸಲಾಗಿದೆ (ಇಂಪೋರ್ಟ್ ಯಶಸ್ವಿ).");
+});
+
+document.getElementById("diReplaceBtn").addEventListener("click", () => {
+  if (!PENDING_IMPORT_DATA) return;
+  if (!confirm("ಈಗಿರುವ ಎಲ್ಲಾ ವಿದ್ಯಾರ್ಥಿಗಳ ಡೇಟಾ ಶಾಶ್ವತವಾಗಿ ಅಳಿಸಲ್ಪಡುತ್ತದೆ. ಮುಂದುವರಿಸಬೇಕೆ?")) return;
+  DATA.students = PENDING_IMPORT_DATA.students || {};
+  DATA.customUnits = PENDING_IMPORT_DATA.customUnits || {};
+  DATA.current = PENDING_IMPORT_DATA.current || null;
+  finishDataImport("ಡೇಟಾ ಸಂಪೂರ್ಣವಾಗಿ ಬದಲಾಯಿಸಲಾಗಿದೆ (ಇಂಪೋರ್ಟ್ ಯಶಸ್ವಿ).");
+});
+
+
+/* ================= PDF / print report ================= */
+function buildStudentReportHTML(student) {
+  const overall = computeOverallPct(student);
+  let html = `<div class="rep-student">
+    <div class="rep-head">
+      <h2>${escapeHtml(student)}</h2>
+      <div class="rep-overall">ಒಟ್ಟು ಪ್ರಗತಿ: <b>${overall}%</b></div>
+    </div>`;
+  STAGES.forEach((st, si) => {
+    const spct = computeStagePct(student, si);
+    html += `<h3>${si+1}. ${escapeHtml(st.name)} <span class="rep-pct">${spct}%</span></h3>`;
+    st.items.forEach((it, ii) => {
+      const units = getUnits(si, ii);
+      const learned = [], pending = [];
+      units.forEach(u => {
+        if (DATA.students[student].checks[unitId(si, ii, u)]) learned.push(u); else pending.push(u);
+      });
+      html += `<div class="rep-item">
+        <p class="rep-item-title">${escapeHtml(it.label)} <span class="rep-frac">(${learned.length}/${units.length})</span></p>
+        ${learned.length ? `<p class="rep-learned">✓ ${learned.map(escapeHtml).join(', ')}</p>` : ''}
+        ${pending.length ? `<p class="rep-pending">✗ ${pending.map(escapeHtml).join(', ')}</p>` : ''}
+      </div>`;
+    });
+  });
+  html += `</div>`;
+  return html;
+}
+
+function exportPdfReport(scope) {
+  const students = scope === "all" ? Object.keys(DATA.students) : [currentStudent()].filter(Boolean);
+  if (!students.length) { alert("ಮೊದಲು ಒಬ್ಬ ವಿದ್ಯಾರ್ಥಿಯನ್ನಾದರೂ ಸೇರಿಸಿ."); return; }
+  const w = window.open("", "_blank");
+  if (!w) { alert("ಪಾಪ್-ಅಪ್ ಬ್ಲಾಕ್ ಆಗಿದೆ. ದಯವಿಟ್ಟು ಈ ಸೈಟ್‌ಗೆ ಪಾಪ್-ಅಪ್ ಅನುಮತಿಸಿ."); return; }
+  const dateStr = new Date().toLocaleDateString("kn-IN", {year: "numeric", month: "long", day: "numeric"});
+  const body = students.map(buildStudentReportHTML).join('<div class="page-break"></div>');
+  w.document.write(`<!DOCTYPE html><html lang="kn"><head><meta charset="UTF-8">
+<title>ಪ್ರಗತಿ ವರದಿ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Serif+Kannada:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: 'Noto Sans Kannada', sans-serif; color: #1c1a17; padding: 24px; max-width: 800px; margin: 0 auto; background:#fff; }
+  h1 { font-family: 'Noto Serif Kannada', serif; font-size: 20px; margin: 0 0 2px; }
+  .rep-date { color: #666; font-size: 12px; margin-bottom: 22px; }
+  .rep-student { margin-bottom: 30px; page-break-inside: avoid; }
+  .rep-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #c1443a; padding-bottom: 6px; margin-bottom: 10px; flex-wrap: wrap; gap: 6px; }
+  .rep-head h2 { font-family: 'Noto Serif Kannada', serif; font-size: 17px; margin: 0; }
+  .rep-overall { font-size: 13px; color: #333; }
+  h3 { font-size: 14px; margin: 14px 0 6px; color: #8a5a1e; }
+  .rep-pct { font-size: 12px; color: #666; font-weight: normal; }
+  .rep-item { margin-bottom: 9px; }
+  .rep-item-title { font-size: 12.5px; font-weight: 700; margin: 0 0 3px; }
+  .rep-frac { font-weight: 400; color: #666; }
+  .rep-learned { font-size: 11.5px; color: #2f6b22; margin: 0 0 2px; line-height: 1.6; }
+  .rep-pending { font-size: 11.5px; color: #a4342b; margin: 0; line-height: 1.6; }
+  .page-break { page-break-after: always; }
+  @media print { body { padding: 10mm; } }
+</style></head><body>
+<h1>ಪ್ರಥಮ ಭಾಷೆ (ಕನ್ನಡ) · FLN ಪ್ರಗತಿ ವರದಿ</h1>
+<div class="rep-date">${dateStr}</div>
+${body}
+</body></html>`);
+  w.document.close();
+  setTimeout(() => { w.focus(); w.print(); }, 700);
+}
+
+document.getElementById("pdfCurrentBtn").addEventListener("click", () => exportPdfReport("current"));
+document.getElementById("pdfAllBtn").addEventListener("click", () => exportPdfReport("all"));
+
+
+/* ================= Class-wise Dashboard ================= */
+function computeDashboardData() {
+  const classNums = ["1","2","3","4","5","6","7","8","9","10"];
+  const mk = () => ({
+    itemDone: STAGES.map(st => st.items.map(() => 0)),
+    stageFull: STAGES.map(() => 0),
+    levelDist: STAGES.map(() => 0),
+    gradeCount: 0,
+    total: 0
+  });
+  const data = {};
+  classNums.forEach(c => { data[c] = mk(); });
+  let unclassified = 0;
+
+  Object.keys(DATA.students).forEach(name => {
+    const cls = studentClassOf(name);
+    if (!cls || !data[cls]) { unclassified++; return; }
+    const d = data[cls];
+    d.total++;
+    let firstIncomplete = -1;
+    STAGES.forEach((st, si) => {
+      let stageFullyDone = true;
+      st.items.forEach((item, ii) => {
+        const r = computeItemDone(name, si, ii);
+        const full = r.total > 0 && r.done === r.total;
+        if (full) d.itemDone[si][ii]++;
+        else stageFullyDone = false;
+      });
+      if (stageFullyDone) d.stageFull[si]++;
+      else if (firstIncomplete === -1) firstIncomplete = si;
+    });
+    const currentIdx = firstIncomplete === -1 ? STAGES.length - 1 : firstIncomplete;
+    d.levelDist[currentIdx]++;
+    if (computeOverallPct(name) === 100) d.gradeCount++;
+  });
+
+  return { classNums, data, unclassified };
+}
+
+function renderDashboardTable() {
+  const { classNums, data, unclassified } = computeDashboardData();
+  const table = document.getElementById("dashTable");
+
+  let itemColCount = 0;
+  STAGES.forEach(st => { itemColCount += st.items.length + 1; });
+  const totalCols = 1 + itemColCount + STAGES.length + 1;
+
+  let thead = "<thead><tr><th rowspan=\"2\">ತರಗತಿ</th>";
+  STAGES.forEach(st => {
+    thead += `<th colspan="${st.items.length + 1}">${st.name}</th>`;
+  });
+  thead += `<th colspan="${STAGES.length}">ಆರಂಭಿಕ ಹಂತ (ಪ್ರಸ್ತುತ ಇರುವ ಹಂತ)</th>`;
+  thead += '<th rowspan="2">ಗ್ರೇಡ್ A/B<br>(ಪೂರ್ಣ)</th></tr><tr>';
+  STAGES.forEach(st => {
+    st.items.forEach(item => { thead += `<th>${item.label}</th>`; });
+    thead += `<th>ಕ್ರೋಢಿಕರಣ</th>`;
+  });
+  STAGES.forEach(st => { thead += `<th>${st.name}</th>`; });
+  thead += "</tr></thead>";
+
+  let tbody = "<tbody>";
+  const colTotals = new Array(totalCols - 1).fill(0);
+  classNums.forEach(cls => {
+    const d = data[cls];
+    let row = `<tr><td class="cls-col">${cls} ನೇ</td>`;
+    let ci = 0;
+    STAGES.forEach((st, si) => {
+      st.items.forEach((item, ii) => {
+        const v = d.itemDone[si][ii];
+        row += `<td>${v}</td>`;
+        colTotals[ci++] += v;
+      });
+      const v = d.stageFull[si];
+      row += `<td><b>${v}</b></td>`;
+      colTotals[ci++] += v;
+    });
+    STAGES.forEach((st, si) => {
+      const v = d.levelDist[si];
+      row += `<td>${v}</td>`;
+      colTotals[ci++] += v;
+    });
+    row += `<td class="grade-col">${d.gradeCount}</td>`;
+    colTotals[ci++] += d.gradeCount;
+    row += "</tr>";
+    tbody += row;
+  });
+  tbody += "</tbody>";
+
+  let tfoot = '<tfoot><tr><td>ಒಟ್ಟು</td>';
+  colTotals.forEach(v => { tfoot += `<td>${v}</td>`; });
+  tfoot += "</tr></tfoot>";
+
+  table.innerHTML = thead + tbody + tfoot;
+}
+
+function exportDashboardExcel() {
+  const { classNums, data } = computeDashboardData();
+  const rows = [];
+  const header1 = ["ತರಗತಿ"];
+  const header2 = [""];
+  STAGES.forEach(st => {
+    st.items.forEach(() => header1.push(st.name));
+    header1.push(st.name);
+    st.items.forEach(item => header2.push(item.label));
+    header2.push("ಕ್ರೋಢಿಕರಣ");
+  });
+  STAGES.forEach(st => { header1.push("ಆರಂಭಿಕ ಹಂತ"); header2.push(st.name); });
+  header1.push("ಗ್ರೇಡ್ A/B"); header2.push("ಪೂರ್ಣಗೊಳಿಸಿದವರು");
+  rows.push(header1, header2);
+
+  classNums.forEach(cls => {
+    const d = data[cls];
+    const row = [cls + " ನೇ"];
+    STAGES.forEach((st, si) => {
+      st.items.forEach((item, ii) => row.push(d.itemDone[si][ii]));
+      row.push(d.stageFull[si]);
+    });
+    STAGES.forEach((st, si) => row.push(d.levelDist[si]));
+    row.push(d.gradeCount);
+    rows.push(row);
+  });
+
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  const merges = [];
+  let col = 1;
+  merges.push({ s: { r: 0, c: 0 }, e: { r: 1, c: 0 } });
+  STAGES.forEach(st => {
+    merges.push({ s: { r: 0, c: col }, e: { r: 0, c: col + st.items.length } });
+    col += st.items.length + 1;
+  });
+  const levelStart = col;
+  merges.push({ s: { r: 0, c: levelStart }, e: { r: 0, c: levelStart + STAGES.length - 1 } });
+  col += STAGES.length;
+  merges.push({ s: { r: 0, c: col }, e: { r: 1, c: col } });
+  ws["!merges"] = merges;
+  ws["!cols"] = header2.map(() => ({ wch: 14 }));
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "ಕ್ರೋಢೀಕರಣ");
+  XLSX.writeFile(wb, APP_LABEL + "_dashboard.xlsx");
+}
+
+function printDashboard() {
+  const w = window.open("", "_blank");
+  if (!w) { alert("ಪಾಪ್-ಅಪ್ ಬ್ಲಾಕ್ ಆಗಿದೆ. ದಯವಿಟ್ಟು ಈ ಸೈಟ್\u200cಗೆ ಪಾಪ್-ಅಪ್ ಅನುಮತಿಸಿ."); return; }
+  const dateStr = new Date().toLocaleDateString("kn-IN", {year: "numeric", month: "long", day: "numeric"});
+  const tableHTML = document.getElementById("dashTable").outerHTML;
+  w.document.write(`<!DOCTYPE html><html lang="kn"><head><meta charset="UTF-8">
+<title>${APP_LABEL} · ಕ್ರೋಢೀಕರಣ ಡ್ಯಾಶ್\u200cಬೋರ್ಡ್</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Serif+Kannada:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: 'Noto Sans Kannada', sans-serif; padding: 24px; color:#1a1a1a; }
+  h1 { font-family: 'Noto Serif Kannada', serif; font-size: 20px; margin-bottom:2px; }
+  p.meta { font-size: 12px; color:#666; margin-top:0 0 16px; }
+  table { border-collapse: collapse; width: 100%; font-size: 10.5px; }
+  th, td { border: 1px solid #999; padding: 4px 5px; text-align: center; }
+  thead tr:first-child th { background: #eee; }
+  tfoot td { font-weight: 700; background: #f3f3f3; }
+  @media print { body { padding: 8px; } }
+</style></head><body>
+<h1>${APP_LABEL} · FLN ಕ್ರೋಢೀಕರಣ ಡ್ಯಾಶ್\u200cಬೋರ್ಡ್ (ತರಗತಿವಾರು)</h1>
+<p class="meta">ದಿನಾಂಕ: ${dateStr}</p>
+${tableHTML}
+</body></html>`);
+  w.document.close();
+  setTimeout(() => { w.focus(); w.print(); }, 700);
+}
+
+document.getElementById("dashboardBtn").addEventListener("click", () => {
+  renderDashboardTable();
+  openModal("modalDashboard");
+});
+document.getElementById("dashExcelBtn").addEventListener("click", exportDashboardExcel);
+document.getElementById("dashPrintBtn").addEventListener("click", printDashboard);
+
+
+/* ================= Student List Dashboard (Achieved / Not Achieved) ================= */
+function populateContentSelect() {
+  const sel = document.getElementById("slContentSelect");
+  let html = '<option value="overall">🏁 ಒಟ್ಟಾರೆ ಪೂರ್ಣಗೊಳಿಸಿದವರು (100%)</option>';
+  STAGES.forEach((st, si) => {
+    html += `<option value="stage_${si}">📘 ${st.name} (ಸಂಪೂರ್ಣ)</option>`;
+    st.items.forEach((item, ii) => {
+      html += `<option value="item_${si}_${ii}">　└ ${item.label}</option>`;
+    });
+  });
+  sel.innerHTML = html;
+}
+
+function isContentAchieved(name, contentValue) {
+  if (contentValue === "overall") return computeOverallPct(name) === 100;
+  if (contentValue.indexOf("stage_") === 0) {
+    const si = parseInt(contentValue.split("_")[1], 10);
+    return computeStagePct(name, si) === 100;
+  }
+  if (contentValue.indexOf("item_") === 0) {
+    const parts = contentValue.split("_");
+    const si = parseInt(parts[1], 10), ii = parseInt(parts[2], 10);
+    const r = computeItemDone(name, si, ii);
+    return r.total > 0 && r.done === r.total;
+  }
+  return false;
+}
+
+function renderStudentListDashboard() {
+  const clsFilter = document.getElementById("slClassSelect").value;
+  const content = document.getElementById("slContentSelect").value;
+  const achieved = [];
+  const notAchieved = [];
+  Object.keys(DATA.students).sort().forEach(name => {
+    const cls = studentClassOf(name);
+    if (clsFilter && cls !== clsFilter) return;
+    if (isContentAchieved(name, content)) achieved.push(name);
+    else notAchieved.push(name);
+  });
+  document.getElementById("slAchievedCount").textContent = achieved.length;
+  document.getElementById("slNotAchievedCount").textContent = notAchieved.length;
+  document.getElementById("slAchievedList").innerHTML = achieved.length
+    ? achieved.map(n => `<div class="sl-name-item">${n}</div>`).join("")
+    : '<p class="sl-empty">ಯಾರೂ ಇಲ್ಲ</p>';
+  document.getElementById("slNotAchievedList").innerHTML = notAchieved.length
+    ? notAchieved.map(n => `<div class="sl-name-item">${n}</div>`).join("")
+    : '<p class="sl-empty">ಯಾರೂ ಇಲ್ಲ</p>';
+}
+
+function printStudentListDashboard() {
+  const w = window.open("", "_blank");
+  if (!w) { alert("ಪಾಪ್-ಅಪ್ ಬ್ಲಾಕ್ ಆಗಿದೆ. ದಯವಿಟ್ಟು ಈ ಸೈಟ್\u200cಗೆ ಪಾಪ್-ಅಪ್ ಅನುಮತಿಸಿ."); return; }
+  const dateStr = new Date().toLocaleDateString("kn-IN", {year: "numeric", month: "long", day: "numeric"});
+  const clsLabel = document.getElementById("slClassSelect").selectedOptions[0].textContent;
+  const contentLabel = document.getElementById("slContentSelect").selectedOptions[0].textContent;
+  const achievedHTML = document.getElementById("slAchievedList").innerHTML;
+  const notAchievedHTML = document.getElementById("slNotAchievedList").innerHTML;
+  w.document.write(`<!DOCTYPE html><html lang="kn"><head><meta charset="UTF-8">
+<title>${APP_LABEL} · ವಿದ್ಯಾರ್ಥಿ ಪಟ್ಟಿ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;600;700&family=Noto+Serif+Kannada:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: 'Noto Sans Kannada', sans-serif; padding: 24px; color:#1a1a1a; }
+  h1 { font-family: 'Noto Serif Kannada', serif; font-size: 20px; margin-bottom:2px; }
+  p.meta { font-size: 12px; color:#666; margin:0 0 18px; }
+  .cols { display:flex; gap:20px; }
+  .col { flex:1; border:1px solid #999; border-radius:8px; padding:12px; }
+  .col h3 { font-size:14px; margin-top:0; }
+  .item { border-bottom:1px solid #eee; padding:5px 2px; font-size:12.5px; }
+  @media print { body { padding: 8px; } }
+</style></head><body>
+<h1>${APP_LABEL} · ವಿದ್ಯಾರ್ಥಿ ಪಟ್ಟಿ (ಸಾಧಿಸಿದ / ಸಾಧಿಸದ)</h1>
+<p class="meta">ತರಗತಿ: ${clsLabel} &nbsp;·&nbsp; ಅಂಶ: ${contentLabel} &nbsp;·&nbsp; ದಿನಾಂಕ: ${dateStr}</p>
+<div class="cols">
+  <div class="col"><h3>✅ ಸಾಧಿಸಿದ ವಿದ್ಯಾರ್ಥಿಗಳು</h3>${achievedHTML.replace(/class="sl-name-item"/g,'class="item"').replace(/class="sl-empty"/g,'class="item"')}</div>
+  <div class="col"><h3>❌ ಸಾಧಿಸದ ವಿದ್ಯಾರ್ಥಿಗಳು</h3>${notAchievedHTML.replace(/class="sl-name-item"/g,'class="item"').replace(/class="sl-empty"/g,'class="item"')}</div>
+</div>
+</body></html>`);
+  w.document.close();
+  setTimeout(() => { w.focus(); w.print(); }, 700);
+}
+
+document.getElementById("dashboardBtn2").addEventListener("click", () => {
+  populateContentSelect();
+  renderStudentListDashboard();
+  openModal("modalStudentList");
+});
+document.getElementById("slClassSelect").addEventListener("change", renderStudentListDashboard);
+document.getElementById("slContentSelect").addEventListener("change", renderStudentListDashboard);
+document.getElementById("slPrintBtn").addEventListener("click", printStudentListDashboard);
+
+/* ================= Modal helpers ================= */
+function openModal(id) { document.getElementById(id).classList.add("show"); }
+function closeModal(id) { document.getElementById(id).classList.remove("show"); }
+document.querySelectorAll("[data-close]").forEach(btn => {
+  btn.addEventListener("click", () => closeModal(btn.dataset.close));
+});
+document.querySelectorAll(".modal-overlay").forEach(ov => {
+  ov.addEventListener("click", (e) => { if (e.target === ov) ov.classList.remove("show"); });
+});
+
+function setStatus(elId, type, msg) {
+  const el = document.getElementById(elId);
+  el.className = "status-msg show " + type;
+  el.textContent = msg;
+}
+function clearStatus(elId) {
+  const el = document.getElementById(elId);
+  el.className = "status-msg";
+  el.textContent = "";
+}
+
+/* ================= Bulk student import ================= */
+document.getElementById("bulkImportBtn").addEventListener("click", () => {
+  document.getElementById("excelFile").value = "";
+  document.getElementById("excelFname").textContent = "";
+  document.getElementById("excelPreview").style.display = "none";
+  document.getElementById("gsheetPreview").style.display = "none";
+  document.getElementById("gsheetConfirmBtn").style.display = "none";
+  document.getElementById("gsheetUrl").value = "";
+  clearStatus("excelStatus"); clearStatus("gsheetStatus");
+  openModal("modalImport");
+});
+
+document.querySelectorAll("#modalImport .tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("#modalImport .tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll("#modalImport .tab-panel").forEach(p => p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+  });
+});
+
+const CLASS_WORDS = ["ತರಗತಿ","class","cls","std","ಸ್ಟ್ಯಾಂಡರ್ಡ್"];
+const NAME_WORDS = ["ಹೆಸರು","name","student","ವಿದ್ಯಾರ್ಥಿ"];
+
+function looksLikeHeader(cellA, cellB) {
+  const a = (cellA||"").toString().trim().toLowerCase();
+  const b = (cellB||"").toString().trim().toLowerCase();
+  return NAME_WORDS.some(w => a.includes(w.toLowerCase())) || CLASS_WORDS.some(w => b.includes(w.toLowerCase()));
+}
+
+function rowsToStudents(rows) {
+  const out = [];
+  rows.forEach((row, idx) => {
+    if (!row || row.length === 0) return;
+    let name = (row[0] !== undefined ? row[0] : "").toString().trim();
+    let cls = (row[1] !== undefined ? row[1] : "").toString().trim();
+    if (!name) return;
+    if (idx === 0 && looksLikeHeader(name, cls)) return;
+    // strip trailing " ನೇ ತರಗತಿ" style text, keep digits only if present
+    const digitMatch = cls.match(/\d+/);
+    if (digitMatch) cls = digitMatch[0];
+    out.push({ name, cls });
+  });
+  return out;
+}
+
+function parseDelimitedText(text) {
+  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length);
+  return lines.map(line => {
+    const parts = line.includes("\t") ? line.split("\t") : line.split(",");
+    return parts.map(p => p.trim().replace(/^"|"$/g, ""));
+  });
+}
+
+function renderPreview(elId, students) {
+  const el = document.getElementById(elId);
+  if (!students.length) { el.style.display = "none"; return; }
+  el.style.display = "block";
+  el.innerHTML = students.slice(0, 40).map(s => `<div>${escapeHtml(s.name)}${s.cls ? " — " + escapeHtml(s.cls) + "ನೇ ತರಗತಿ" : ""}</div>`).join("")
+    + (students.length > 40 ? `<div>… ಒಟ್ಟು ${students.length}</div>` : "");
+}
+
+function importStudents(students) {
+  let added = 0, skipped = 0;
+  students.forEach(s => {
+    const label = studentLabel(s.name, s.cls);
+    if (DATA.students[label]) { skipped++; return; }
+    ensureStudent(label);
+    added++;
+  });
+  if (students.length) DATA.current = studentLabel(students[students.length-1].name, students[students.length-1].cls);
+  saveData(DATA);
+  resetClassFilterUI();
+  renderStudentSelect();
+  renderStages();
+  refreshProgress();
+  return { added, skipped };
+}
+
+let pendingExcelStudents = [];
+document.getElementById("excelFile").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  document.getElementById("excelFname").textContent = file.name;
+  clearStatus("excelStatus");
+  const isTextType = /\.(csv|txt)$/i.test(file.name);
+  if (isTextType) {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const rows = parseDelimitedText(ev.target.result);
+      pendingExcelStudents = rowsToStudents(rows);
+      renderPreview("excelPreview", pendingExcelStudents);
+      if (!pendingExcelStudents.length) setStatus("excelStatus", "err", "ಯಾವುದೇ ಹೆಸರುಗಳು ಸಿಗಲಿಲ್ಲ. ಫೈಲ್ ಸ್ವರೂಪ ಪರಿಶೀಲಿಸಿ.");
+    };
+    reader.readAsText(file);
+  } else {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const data = new Uint8Array(ev.target.result);
+        const wb = XLSX.read(data, {type: "array"});
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(ws, {header: 1, defval: ""});
+        pendingExcelStudents = rowsToStudents(rows);
+        renderPreview("excelPreview", pendingExcelStudents);
+        if (!pendingExcelStudents.length) setStatus("excelStatus", "err", "ಯಾವುದೇ ಹೆಸರುಗಳು ಸಿಗಲಿಲ್ಲ. ಫೈಲ್‌ನ ಮೊದಲ ಎರಡು ಕಾಲಂಗಳನ್ನು ಪರಿಶೀಲಿಸಿ.");
+      } catch (err) {
+        setStatus("excelStatus", "err", "ಫೈಲ್ ಓದಲು ಆಗಲಿಲ್ಲ: " + err.message);
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  }
+});
+
+document.getElementById("excelConfirmBtn").addEventListener("click", () => {
+  if (!pendingExcelStudents.length) { setStatus("excelStatus", "err", "ಮೊದಲು ಫೈಲ್ ಆಯ್ಕೆ ಮಾಡಿ."); return; }
+  const {added, skipped} = importStudents(pendingExcelStudents);
+  setStatus("excelStatus", "ok", added + " ವಿದ್ಯಾರ್ಥಿಗಳು ಸೇರಿಸಲಾಗಿದೆ" + (skipped ? ", " + skipped + " ಈಗಾಗಲೇ ಇದ್ದವು" : "") + ".");
+  setTimeout(() => closeModal("modalImport"), 900);
+});
+
+let pendingGSheetStudents = [];
+function extractSheetId(url) {
+  const m = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+  return m ? m[1] : null;
+}
+document.getElementById("gsheetFetchBtn").addEventListener("click", async () => {
+  const url = document.getElementById("gsheetUrl").value.trim();
+  clearStatus("gsheetStatus");
+  document.getElementById("gsheetConfirmBtn").style.display = "none";
+  document.getElementById("gsheetPreview").style.display = "none";
+  const id = extractSheetId(url);
+  if (!id) { setStatus("gsheetStatus", "err", "ಸರಿಯಾದ ಗೂಗಲ್ ಶೀಟ್ ಲಿಂಕ್ ಹಾಕಿ."); return; }
+  const csvUrl = "https://docs.google.com/spreadsheets/d/" + id + "/gviz/tq?tqx=out:csv";
+  setStatus("gsheetStatus", "ok", "ಪಟ್ಟಿ ತರಿಸಲಾಗುತ್ತಿದೆ…");
+  try {
+    const res = await fetch(csvUrl);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const text = await res.text();
+    const rows = parseDelimitedText(text);
+    pendingGSheetStudents = rowsToStudents(rows);
+    renderPreview("gsheetPreview", pendingGSheetStudents);
+    if (pendingGSheetStudents.length) {
+      setStatus("gsheetStatus", "ok", pendingGSheetStudents.length + " ಸಾಲುಗಳು ಸಿಕ್ಕಿವೆ. ಪರಿಶೀಲಿಸಿ ಆಮದು ಮಾಡಿ.");
+      document.getElementById("gsheetConfirmBtn").style.display = "inline-flex";
+    } else {
+      setStatus("gsheetStatus", "err", "ಯಾವುದೇ ಹೆಸರುಗಳು ಸಿಗಲಿಲ್ಲ.");
+    }
+  } catch (err) {
+    setStatus("gsheetStatus", "err", "ಶೀಟ್ ತರಲು ಆಗಲಿಲ್ಲ. ಶೀಟ್ ಅನ್ನು \"Anyone with the link\" ಎಂದು ಶೇರ್ ಮಾಡಿರುವುದನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.");
+  }
+});
+document.getElementById("gsheetConfirmBtn").addEventListener("click", () => {
+  if (!pendingGSheetStudents.length) return;
+  const {added, skipped} = importStudents(pendingGSheetStudents);
+  setStatus("gsheetStatus", "ok", added + " ವಿದ್ಯಾರ್ಥಿಗಳು ಸೇರಿಸಲಾಗಿದೆ" + (skipped ? ", " + skipped + " ಈಗಾಗಲೇ ಇದ್ದವು" : "") + ".");
+  setTimeout(() => closeModal("modalImport"), 900);
+});
+
+/* ================= Add content (words/sentences/paragraphs) ================= */
+function populateContentStageSelect() {
+  const sel = document.getElementById("contentStageSelect");
+  sel.innerHTML = STAGES.map((st, si) => `<option value="${si}">${st.name}</option>`).join("");
+}
+function populateContentItemSelect(si) {
+  const sel = document.getElementById("contentItemSelect");
+  sel.innerHTML = STAGES[si].items.map((it, ii) => `<option value="${ii}">${it.label}</option>`).join("");
+}
+document.getElementById("contentStageSelect").addEventListener("change", (e) => {
+  populateContentItemSelect(parseInt(e.target.value, 10));
+});
+populateContentStageSelect();
+populateContentItemSelect(0);
+
+function openContentModal(si, ii) {
+  populateContentStageSelect();
+  document.getElementById("contentStageSelect").value = si;
+  populateContentItemSelect(si);
+  if (ii !== undefined) document.getElementById("contentItemSelect").value = ii;
+  document.getElementById("contentTextarea").value = "";
+  document.getElementById("contentFile").value = "";
+  document.getElementById("contentFname").textContent = "";
+  clearStatus("contentStatus");
+  openModal("modalContent");
+}
+document.getElementById("addContentBtn").addEventListener("click", () => openContentModal(0, 0));
+
+document.getElementById("contentFile").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  document.getElementById("contentFname").textContent = file.name;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const ta = document.getElementById("contentTextarea");
+    const existing = ta.value.trim();
+    const incoming = ev.target.result.split(/\r?\n|,/).map(s => s.trim()).filter(Boolean).join("\n");
+    ta.value = existing ? (existing + "\n" + incoming) : incoming;
+  };
+  reader.readAsText(file);
+});
+
+document.getElementById("contentConfirmBtn").addEventListener("click", () => {
+  const si = parseInt(document.getElementById("contentStageSelect").value, 10);
+  const ii = parseInt(document.getElementById("contentItemSelect").value, 10);
+  const raw = document.getElementById("contentTextarea").value;
+  const entries = raw.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+  if (!entries.length) { setStatus("contentStatus", "err", "ಕನಿಷ್ಠ ಒಂದು ನಮೂದು ಟೈಪ್ ಮಾಡಿ ಅಥವಾ ಫೈಲ್ ಅಪಲೋಡ್ ಮಾಡಿ."); return; }
+  const key = itemKey(si, ii);
+  const existingUnits = getUnits(si, ii);
+  const arr = DATA.customUnits[key] || [];
+  let added = 0, dup = 0;
+  entries.forEach(en => {
+    if (existingUnits.includes(en) || arr.includes(en)) { dup++; return; }
+    arr.push(en); added++;
+  });
+  DATA.customUnits[key] = arr;
+  saveData(DATA);
+  renderStages();
+  refreshProgress();
+  setStatus("contentStatus", "ok", added + " ಹೊಸ ನಮೂದುಗಳು ಸೇರಿಸಲಾಗಿದೆ" + (dup ? ", " + dup + " ಈಗಾಗಲೇ ಇದ್ದವು" : "") + ".");
+  setTimeout(() => closeModal("modalContent"), 900);
+});
+
+renderStudentSelect();
+renderStages();
+refreshProgress();
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
